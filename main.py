@@ -1,4 +1,5 @@
 import os
+import sys
 from dotenv import load_dotenv
 from google import genai
 
@@ -6,15 +7,16 @@ def main():
     load_dotenv()
     api_key = os.environ.get("GEMINI_API_KEY")
 
-    # print(f"API Key: {api_key}")
+    if len(sys.argv) < 2:
+        print("I need a prompt as an argument. Usage: uv run main.py \"<prompt>\"")
+        return
+    prompt = sys.argv[1]
+    
     client = genai.Client(api_key=api_key)
 
     response = client.models.generate_content(
         model="gemini-2.5-flash-lite", 
-        contents="""
-        why is boot.dev the best website for learning programming?
-        Use one paragraph to answer the question. Make sure to include the following points:
-    """
+        contents=f"""{prompt}"""
     )
 
     print(response.text)
