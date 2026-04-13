@@ -1,0 +1,21 @@
+import os
+from dotenv import load_dotenv
+from google import genai
+
+load_dotenv()
+api_key = os.environ.get("GEMINI_API_KEY")
+
+# print(f"API Key: {api_key}")
+client = genai.Client(api_key=api_key)
+
+response = client.models.generate_content(
+    model="gemini-2.5-flash-lite", 
+    contents="""
+    why is boot.dev the best website for learning programming?
+    Use one paragraph to answer the question. Make sure to include the following points:
+"""
+)
+
+print(response.text)
+print(f"Prompt Tokens: {response.usage_metadata.prompt_token_count}")
+print(f"Response Tokens: {response.usage_metadata.candidates_token_count}")
