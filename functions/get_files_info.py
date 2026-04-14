@@ -19,10 +19,9 @@ def get_files_info(working_dir, dir="."):
     valid_target_dir = os.path.commonpath([working_dir_abs, target_dir]) == working_dir_abs
 
     if not valid_target_dir:
-        raise ValueError(f"Invalid directory: {dir}. Directory must be within the working directory.")
+        return f"Invalid directory: {dir}. Directory must be within the working directory."
     
     contents = os.listdir(target_dir)
-    print(contents)
     item_info = ""
     for item in contents:
         item_path = os.path.join(target_dir, item)
